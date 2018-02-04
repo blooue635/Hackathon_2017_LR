@@ -58,6 +58,15 @@ function ajaxRequest(d, i, callback) {
                         return callback(dataToSend);
                     });
                     break;
+                case '&db=budget&table=bp_2016_fonction&format=json':
+                    $.getJSON( "../metaData/budget2016.json", function(metadata){
+                        var dataToSend = {};
+                        dataToSend["data"] = obj.opendata.answer.data;
+                        dataToSend["i"] = i;
+                        dataToSend["metadata"] = metadata;
+                        dataToSend["linkMetadata"] = "../metaData/budget2016.json";
+                        return callback(dataToSend);
+                    });
             }
         }
     });

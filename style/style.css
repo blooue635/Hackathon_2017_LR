@@ -157,6 +157,16 @@ body > div > div.navbar.navTitleIcon > div > ul {
 }
 /* =============== END COMMENT VISU ===============*/
 
+.label-warning {
+    background-color: white;
+    color: black;
+}
+
+.label-warning:hover {
+    background-color: orange;
+    color: white;
+}
+
 .divContent {
     margin-right: 10%;
     margin-left: 10%;
@@ -357,6 +367,14 @@ body > div > div.navbar.navTitleIcon > div > ul {
 }
 /* =============== END TABLE =============== */
 
+/* =============== Plateform =================== */
+
+#returnButton {
+    position: fixed;
+    top: 20px;
+    left: 20px;  
+}
+/* =============== END Plateform =============== */
 
 /* =============== MEDIA QUERIES =============== */
 @media (min-width: 620px) and (max-width: 900px){

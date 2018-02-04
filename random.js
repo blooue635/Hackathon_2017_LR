@@ -8,10 +8,10 @@ function generateAleatoryVariables() {
     // Get random values between 1 and 4 and put them in an array
     var numberArray = [];
     for (i = 0; i < 4; i++) {
-        numberArray.push(Math.floor(Math.random() * 3));
+        numberArray.push(Math.floor(Math.random() * 4));
     }
 
-    var dataArray = ['&db=insee&table=population_2008&format=json', '&db=stationnement&table=disponibilite_parking&format=json',/* '&db=archive&table=fiche&format=json',*/ '&db=budget&table=bp_2017_fonction&format=json'];
+    var dataArray = ['&db=insee&table=population_2008&format=json', '&db=stationnement&table=disponibilite_parking&format=json',/* '&db=archive&table=fiche&format=json',*/ '&db=budget&table=bp_2017_fonction&format=json', '&db=budget&table=bp_2016_fonction&format=json'];
 
     // Get data from open data la rochelle
     for (i = 0; i < numberArray.length; i++) {

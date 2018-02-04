@@ -1,7 +1,7 @@
 
 // Declaration of variables
-var dataBox1 = [], dataBox2 = [], dataBox3 = [], dataBox4 = [],
-    chart1 = null, chart2 = null, chart3 = null, chart4 = null;
+var dataBox1 = [], dataBox2 = [],
+    chart1 = null, chart2 = null,heightMax=0;
 
 /**
  * Initialization 
@@ -39,25 +39,6 @@ function init() {
             drawGraph(dataBox2[0], dataBox2[1], dataBox2[2], metadata, val, dataBox2[3], dataBox2[4]);
         });
     });
-
-    $("#select2").change(function() {
-        var val = $("#select2").val();
-        chart3.destroy();
-        $.getJSON( dataBox3[3], function(metadata) {
-            // Draw a visualization
-            drawGraph(dataBox3[0], dataBox3[1], dataBox3[2], metadata, val, dataBox3[3], dataBox3[4]);
-        });
-    });
-
-    $("#select3").change(function() {
-        var val = $("#select3").val();
-        chart4.destroy();
-        $.getJSON( dataBox4[3], function(metadata) {
-            // Draw a visualization
-            drawGraph(dataBox4[0], dataBox4[1], dataBox4[2], metadata, val, dataBox4[3], dataBox4[4]);
-        });
-    });
-
     return;
 };
 
@@ -76,7 +57,7 @@ function drawRandomVisualization(dataJson, position, metadata, metadataLink) {
     var HistorisedLocalisableVisualisation = ["graph", "timeline", "map"];
     var NotHistorisedNotLocalisableVisualisation = ["graph"];
     var NotHistorisedLocalisableVisualisation = ["graph", /*"map",*/ "table"];
-    var HistorisedNotLocalisableVisualisation = ["graph", "table"]; //timeline
+    var HistorisedNotLocalisableVisualisation = ["graph", "table","timeline"]; //timeline
 
     // Call the good method to draw the graph, timeline or map
     switch (metadata.dataType) {
@@ -216,7 +197,10 @@ function parseDataForGraph(dataJson, metadata, position) {
             v.push(d[onlyOneElement]);
             k.push(d[selectList]);
         });
+        //2 fois pour la comparaison, cherchez pas
         values.push(v);
+        values.push(v);
+        keys.push(k);
         keys.push(k);
 
         //Hide the select 
@@ -271,22 +255,30 @@ function drawGraph(dataJson, randGraph, position, metadata, selectVal, metadataL
     
     // Put link on the graph if we are in the random page
     if (opts.link) {
-        defineLinks("graph", position, metadata.link);
+        if (opts.compare){
+            defineLinks("graph", "Compare", metadata.link);
+        }
+        else {            
+            defineLinks("graph", position, metadata.link);
+        }
+
     }
 
     // Initialization
     var ctx = null, val = null, titleCanvas = metadata.graph.dataComposition.title, colors = [], dataBox = null;
     var hide_select = "#select" + position, myChart = "#myChart" + position, myBox = "#box" + (position + 1);
+    // Define chart context
+    ctx = $(myChart);
+
+    if (opts.compare){
+        ctx = "chart"+position+"_compare";
+    }
 
     // Get actual box
     if(position === 0) {
         dataBox = dataBox1;
     } else if(position === 1) {
         dataBox = dataBox2;
-    } else if(position === 2) {
-        dataBox = dataBox3;
-    } else if(position === 3) {
-        dataBox = dataBox4;
     }
 
     // Parse data to draw chart
@@ -317,19 +309,6 @@ function drawGraph(dataJson, randGraph, position, metadata, selectVal, metadataL
 
     // Add the title
     $(myBox).find("h4").text(titleCanvas);
-    
-/*
-    if($(myChart).height() == "500") {
-        console.log('ici')
-        var ctx = $(myChart).get(0).getContext('2d');
-        ctx.canvas.width = 300;
-        ctx.canvas.height = 20 * keys.length;
-        responsive = true;
-        console.log('la')
-    }*/
-
-    // Define chart context 
-    ctx = $(myChart);
 
     // Define global parameters
     var legend = false;
@@ -338,6 +317,23 @@ function drawGraph(dataJson, randGraph, position, metadata, selectVal, metadataL
     }
     var responsive = false;
     Chart.defaults.global.legend.position = "bottom";
+
+    //Height of canvas
+    if(opts.height){
+
+        var courentChart = "myChart" + position ;
+        var elementTemp = document.getElementById(courentChart);
+
+        if(dataJson.length < 50 && (randGraph == "pie" || randGraph == "doughnut")) {
+            elementTemp.width = 600;
+            elementTemp.height = 500;
+            
+        }
+        else if (dataJson.length >= 50){
+            elementTemp.width = 1000;
+            elementTemp.height = dataJson.length * 13;
+        }
+    }
 
     // DRAW Chart
     chart = new Chart(ctx, {
@@ -379,16 +375,55 @@ function drawGraph(dataJson, randGraph, position, metadata, selectVal, metadataL
             }*/
         }
     });
+    if (opts.compare){
+        var ctxCompare = document.getElementById('chart'+position+'_compare').getContext('2d');
+        chartCompare = new Chart(ctxCompare, {
+            data: {
+                labels: keys[0],
+                datasets: [{
+                    data: values[0],
+                    backgroundColor: colors
+                }]
+            },
+            zoom: {
+                enabled: true
+            },
+            options: {
+                responsive: responsive,
+                /*scales: {
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            //suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                            // OR //
+                            beginAtZero: true   // minimum value will be 0.
+                        }
+                    }],
+                    xAxes: [{
+                        display: false,
+                        ticks: {
+                            //suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                            // OR //
+                            beginAtZero: true   // minimum value will be 0.
+                        }
+                    }]
+                },*/
+                legend: { display: legend }//,
+                /*title: {
+                    display: true,
+                    text: title[val]
+                }*/
+            }
+        });
+        chartCompare.update();
+    }
+
 
     // Add canvas to databox array
     if(position === 0) {
         chart1 = chart;
     } else if(position === 1) {
         chart2 = chart;
-    } else if(position === 2) {
-        chart3 = chart;
-    } else if(position === 3) {
-        chart4 = chart;
     }
 };
 
@@ -446,6 +481,10 @@ function drawTable(dataJson, metadata, metadataLink, position) {
             document.getElementById("table_element" + position).appendChild(tr);     
         });
     });   
+    if(metadata.timeline.year) {
+        console.log("timeline")
+        //drawTimeLine(metadata.timeline.year)
+    }
 };
 
 /**
@@ -491,7 +530,7 @@ function drawMap(dataJson, metadata, metadataLink, position) {
         ],
         view: view
     });
-}
+};
 
 
 /**
@@ -500,38 +539,59 @@ function drawMap(dataJson, metadata, metadataLink, position) {
  * @param metadata
  * @param metadataLink
  */
-function drawTimeLine(listYear){
-    //Les années sont récupérées par Ahmed et Claire lors du check ou du uncheck
+function drawTimeLine(dataType, dataName){
 
-    //Problème relevé : Les ticks n'apparaissent que pour les années précisées, mais on peut quand même sélectionner les années "entre".
+    if(dataType === "HistorisedNotLocalisable" || dataType === "HistorisedLocalisable") {
 
-    var listYearNumber=[];
-    for (var i in listYear){
-        listYearNumber.push(Number(listYear[i]));
-    }
+        var listYear = [];
 
-    var anneeMin = Math.min.apply(Math, listYearNumber);
-    var anneeMax = Math.max.apply(Math, listYearNumber);
-
-    var timeLine = document.getElementById("timeControl");
-    var datalist = document.getElementById("tickList");
-
-    if (null != timeLine){
-        timeLine.setAttribute("min",anneeMin);
-        timeLine.setAttribute("max",anneeMax);
-        timeLine.setAttribute("value",anneeMax);
-        timeLine.setAttribute("list","tickList");
-
-        //Dessiner les étapes intermédiaires
-        var min = timeLine.getAttribute("min");
-        var max = timeLine.getAttribute("max");
-
-        for (i in listYearNumber){
-            var option = document.createElement("option");
-            var text = document.createTextNode(listYearNumber[i]);
-            option.appendChild(text);
-            datalist.appendChild(option);
+        if (dataName === "population_2008") {
+            listYear = ['2000','2012','2017'];
+        } else if (dataName === "bp_2017_fonction") {
+            listYear = ['2000','2012', '2014', '2017'];
+        } else {
+            // Affiche pas la timeline
+            console.log("Faire un hide")
         }
+
+        //Les années sont récupérées par Ahmed et Claire lors du check ou du uncheck
+
+        //Problème relevé : Les ticks n'apparaissent que pour les années précisées, mais on peut quand même sélectionner les années "entre".
+        
+        var listYearNumber=[];
+        for (var i in listYear){
+            listYearNumber.push(Number(listYear[i]));
+        }
+
+        var anneeMin = Math.min.apply(Math, listYearNumber);
+        var anneeMax = Math.max.apply(Math, listYearNumber);
+
+        var timeLine = document.getElementById("timeControl");
+        var datalist = document.getElementById("tickList");
+
+        if (null != timeLine){
+            timeLine.setAttribute("min",anneeMin);
+            timeLine.setAttribute("max",anneeMax);
+            timeLine.setAttribute("value",anneeMax);
+            timeLine.setAttribute("list","tickList");
+
+            //Dessiner les étapes intermédiaires
+            var min = timeLine.getAttribute("min");
+            var max = timeLine.getAttribute("max");
+
+            for (i in listYearNumber){
+                var option = document.createElement("option");
+                var text = document.createTextNode(listYearNumber[i]);
+                option.appendChild(text);
+                datalist.appendChild(option);
+            }
+        }
+
+        $("#timeControl").show();
+
+    } else {
+        $("#timeControl").hide();
+        console.log('hide la time line')
     }
 };
 
@@ -565,6 +625,10 @@ function defineLinks(type, position, metadataLink){
 
     var info = "#info" + position;
     $(info).attr("href", "visu.php?type=info&resource=" + metadataLink);
+}
+
+function draw_compare(){
+
 }
 
 

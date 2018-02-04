@@ -11,47 +11,11 @@
     </head>
 
     <!-- ============================ -->
-    <!-- ========== Navbar ========== -->
-    <!-- ============================ -->
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Navbar responsive -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">CoustaData</a>
-        </div>
-
-        <!-- navbar -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="demarche.php">La démarche</a></li>
-            <li><a href="visuIndex.php">Visualisation des données</a></li>
-            <li><a href="utiliserPlateforme.php">Utiliser la plateforme</a></li>
-            <li><a href="contactezNous.php">Contactez-nous</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="mentionsLegales.php">Mentions légales</a></li>
-          </ul>
-
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-
-    <!-- ============================ -->
     <!-- =========== Body =========== -->
     <!-- ============================ -->
     <body>
         <div id="randomData">
-            </br></br>
-
+        
             <div class="box-wrapper-inner">
                 <div id="BienvenuPanel" class="panel panel-default">
                     <div class="panel-body">
@@ -68,7 +32,7 @@
                 <div id='box1' class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title pull-left"></h4>
-                        <button class="btn btn-default label label-warning pull-right" data-toggle="modal" data-target="#example">Warning</button>
+                        <button class="btn btn-default label label-warning pull-right" data-toggle="modal" data-target="#example">Un problème ?</button>
 
                         <div class="modal fade" tabindex="-1" role="dialog" id="example">
                             <div class="modal-dialog">
@@ -106,11 +70,32 @@
 
                 <div id='box2' class="panel panel-default">
                     <div class="panel-heading">
-                        <center><h4></h4></center>
-                        <div class="btn-group pull-right">
-                            <span class="btn btn-default btn-sm glyphicon glyphicon-thumbs-up pouce" aria-hidden="true"></span>
-                            <span class="btn btn-default btn-sm glyphicon glyphicon-thumbs-down pouce" aria-hidden="true"></span>
-                        </div>
+                        <h4 class="panel-title pull-left"></h4>
+                        <button class="btn btn-default label label-warning pull-right" data-toggle="modal" data-target="#example">un problème ?</button>
+                        
+                        <div class="modal fade" tabindex="-1" role="dialog" id="example">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">Modal title</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="checkbox">
+                                            <label class="labelModal"> <input class="check_list" name="check_list[]" type="checkbox">Les données vous semble incorrecte ...</label>
+                                        </div>
+                                        <div class="checkbox"> 
+                                            <label class="labelModal"> <input class="check_list" name="check_list[]" type="checkbox">La visualisation ne vous convient pas ...</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default" data-dismiss="modal">Envoyer</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                        
+                        <div class="clearfix"></div>
                     </div>
                     <div id="panel-body-1" class="panel-body form-group panelBody">
                         </br>
@@ -124,7 +109,7 @@
             </div>
 
 
-            <div class="box-wrapper-inner">
+            <!--<div class="box-wrapper-inner">
                 <div id='box3' class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title pull-left"></h4>
@@ -148,9 +133,9 @@
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-default" data-dismiss="modal">Envoyer</button>
                                     </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div id="panel-body-2"  class="panel-body form-group panelBody">
@@ -161,15 +146,36 @@
                     </div>
                     <a id="seeMore2" style="float:right" class="glyphicon glyphicon-zoom-in btn btn-default bottomButton" aria-hidden="true"></a>
                     <a id="info2" style="float:right" class="glyphicon glyphicon-info-sign btn btn-default bottomButton" aria-hidden="true"></a>
-                </div>
+                </div> -->
 
-                <div id='box4' class="panel panel-default">
+                <!--<div id='box4' class="panel panel-default">
                     <div class="panel-heading">
-                        <center><h4></h4></center>
-                        <div class="btn-group pull-right">
-                            <span class="btn btn-default btn-sm glyphicon glyphicon-thumbs-up pouce" aria-hidden="true"></span>
-                            <span class="btn btn-default btn-sm glyphicon glyphicon-thumbs-down pouce" aria-hidden="true"></span>
+                        <h4 class="panel-title pull-left"></h4>
+                        <button class="btn btn-default label label-warning pull-right" data-toggle="modal" data-target="#example">Warning</button>
+                        
+                        <div class="modal fade" tabindex="-1" role="dialog" id="example">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">Modal title</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="checkbox">
+                                            <label class="labelModal"> <input class="check_list" name="check_list[]" type="checkbox">Les données vous semble incorrecte ...</label>
+                                        </div>
+                                        <div class="checkbox"> 
+                                            <label class="labelModal"> <input class="check_list" name="check_list[]" type="checkbox">La visualisation ne vous convient pas ...</label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default" data-dismiss="modal">Envoyer</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
+                        <div class="clearfix"></div>
                     </div>
                     <div id="panel-body-3" class="panel-body form-group panelBody">
                         </br>
@@ -180,7 +186,7 @@
                     <a id="seeMore3" style="float:right" class="glyphicon glyphicon-zoom-in btn btn-default bottomButton" aria-hidden="true"></a>
                     <a id="info3" style="float:right" class="glyphicon glyphicon-info-sign btn btn-default bottomButton" aria-hidden="true"></a>
                 </div>
-            </div>
+            </div> -->
 
             </br>
             </br>
